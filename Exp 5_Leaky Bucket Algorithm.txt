@@ -1,0 +1,112 @@
+import java.util.Scanner;
+
+public class leakybucket {
+    public static void main(String[] args) {
+
+        int c=0,s,rem=0,n,i,j,rate;
+        System.out.println("\nEnter no of pkts:");
+         Scanner scanner = new Scanner(System.in);
+         n = scanner.nextInt();
+        
+         int size[] = new int[n]; 
+       
+               
+      System.out.println("\nEnter sizes:");
+      for(j=0;j<n;j++)
+           size[j]=scanner.nextInt();
+      
+      System.out.println("\nEnter size of bucket:");
+            s=scanner.nextInt();
+      System.out.println("\nEnter output rate:");
+          rate= scanner.nextInt();
+      for(i=0;i<n; i++)
+      {
+            
+           System.out.println("\n" + " TIME  " + c);
+
+           
+            if(size[i]>s)
+            {
+                  System.out.println("\n"+ "dropped "+ c + "\n");
+            }
+            else if((size[i]+rem)>s)
+            {
+                  System.out.println("\n"+ "dropped "+ c + "\n");
+            }
+            else
+                  rem=rem+size[i];
+            if(rem<rate)
+                  System.out.println("\n" + " bytes txmitted  "  + rem  + "\n");
+            else
+                  System.out.println("\n" + " bytes txmitted  " +  rate + "\n");
+            rem-=rate;
+            if(rem<=0)
+                  rem=0;
+            else
+                  System.out.println("\n" + " bytes still to be txmitted  " + rem + "\n");
+           c++;
+      }
+          
+                 
+             
+          while (rem!=0)
+            {
+               System.out.println("\n" + " TIME " + c + "\n");
+               
+                c++;
+               if(rem<rate)
+               {
+               System.out.println("\n" + " bytes txmitted  "  + rem + "\n");
+                 rem=0; 
+               }
+              if(rem>=rate)
+               {
+                System.out.println("\n" + " bytes txmitted  "  + rate + "\n");
+                 rem-=rate;
+                 System.out.println("\n" + " bytes still to be txmitted  "  + rem + "\n");
+               }
+            
+           }
+return;
+}
+}
+
+
+Sample Output
+
+Enter no of pkts:
+3
+Enter sizes:
+200 300 400
+Enter size of bucket:
+500
+Enter output rate:100
+
+TIME  0
+
+bytes txmitted  100
+bytes still to be txmitted  100
+
+TIME  1
+
+bytes txmitted  100
+bytes still to be txmitted  300
+
+TIME  2
+dropped 2
+bytes txmitted  100
+bytes still to be txmitted  200
+
+TIME 3
+
+bytes txmitted  100
+bytes still to be txmitted  100
+
+TIME 4
+
+bytes txmitted  100
+bytes still to be txmitted  0
+
+
+
+
